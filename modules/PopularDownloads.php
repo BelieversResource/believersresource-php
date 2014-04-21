@@ -9,19 +9,18 @@ global $datPopularDownloads;
 
 // Keep in mind, possible update to the site will be to allow this list based upon "current" category
 
-$datPopularDownloads = array(  /* Slug => Name */
-	'youngs-literal-translation-pdf-bible-7'=>'Young\'s Literal Translation PDF Bible',
-	'king-james-audio-bible-8'=>'King James Audio Bible',
-	'books-of-the-bible-flash-cards-and-games-39'=>'Books of the Bible Flash Cards and Games',
-	'bible-sql-scripts-10'=>'Bible SQL Scripts',
-	'world-english-audio-bible-9'=>'World English Audio Bible',
-	'darby-pdf-bible-4'=>'Darby PDF Bible',
-	'world-english-bible-pdf-5'=>'World English Bible PDF',
-	'xml-bible-55'=>'XML Bible',
-	'king-james-version-104'=>'King james version',
-	'king-james-pdf-bible-1'=>'King James PDF Bible'
-);
+function loadPopularDownloads() {	
+	$datPopularDownloads = array(  /* Slug => Name */);
+	$aryDownloads = readDBcache('select * from downloads order by votes desc limit 10',TRUE);
+	if (count($aryDownloads) > 0) {
+		foreach($aryDownloads as $pk => $data) {
+      $datPopularDownloads[$data['url']] = $data['title'];
+		}
+	}
+  return $datPopularDownloads;
+}
 
+$datPopularDownloads = loadPopularDownloads();
 
 function returnPopularDownloads($aryParams = FALSE) {
 	global $datPopularDownloads;
