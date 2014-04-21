@@ -1,0 +1,18 @@
+<?php
+
+if (!defined('STORE_KEY')) { die ('[ERR:'.__LINE__.'] Invalid direct call to file'); }
+
+$strParentTemplate = 'MasterTemplate';
+
+ob_start(); // ================================== BEGIN: Content ?>
+
+	<div class="container">
+		<?php echo $aryTPL['LeftColumn']; ?>
+	</div>
+	<div id="sidebar">
+		<?php echo $aryTPL['RightColumn']; ?>
+	</div>
+
+<?php $aryTPL['Content'] = ob_get_clean(); // === END: Content
+
+// EOF: ~/inc/templates/TwoColumn.phtml
