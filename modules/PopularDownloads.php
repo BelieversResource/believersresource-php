@@ -11,7 +11,7 @@ global $datPopularDownloads;
 
 function loadPopularDownloads() {	
 	$datPopularDownloads = array(  /* Slug => Name */);
-	$aryDownloads = readDBcache('select * from downloads order by votes desc limit 10',TRUE);
+	$aryDownloads = readDBcache('SELECT `id`, `title`, `url` FROM `downloads` ORDER BY `votes` DESC LIMIT 10',TRUE);
 	if (count($aryDownloads) > 0) {
 		foreach($aryDownloads as $pk => $data) {
       $datPopularDownloads[$data['url']] = $data['title'];

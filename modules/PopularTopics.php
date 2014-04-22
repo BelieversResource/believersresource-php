@@ -4,19 +4,19 @@
 
 global $datPopularTopics;
 
-// This will be replaced by code to load in from database. Using sample data for now
-$datPopularTopics = array( /*  Slug => Topic  */
-	'miracle'=>'miracle',
-	'israel'=>'Israel',
-	'women'=>'women',
-	'faith'=>'faith',
-	'david'=>'David',
-	'prayer'=>'prayer',
-	'god'=>'God',
-	'temple'=>'temple',
-	'ruler'=>'ruler',
-	'priest'=>'priest'
-);
+
+function loadPopularTopics() {	
+	$datPopularTopics = array(  /* Slug => Name */);
+	$aryTopics = readDBcache('SELECT t.`id`, t.`url`, t.`name` FROM `temp_popular_topics` tpt INNER JOIN `topics` t on t.id=tpt.`topic_id` ORDER BY tpt.`votes` DESC LIMIT 10',TRUE);
+	if (count($aryTopics) > 0) {
+		foreach($aryTopics as $pk => $data) {
+      $datPopularTopics[$data['url']] = $data['name'];
+		}
+	}
+  return $datPopularTopics;
+}
+ 
+ $datPopularTopics = loadPopularTopics();
 
 
 function returnPopularTopics($aryParams = FALSE) {
